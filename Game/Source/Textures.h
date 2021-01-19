@@ -5,8 +5,6 @@
 
 #include "List.h"
 
-class Render;
-
 struct SDL_Texture;
 struct SDL_Surface;
 
@@ -14,13 +12,13 @@ class Textures : public Module
 {
 public:
 
-	Textures(Render* render);
+	Textures();
 
 	// Destructor
 	virtual ~Textures();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -35,8 +33,6 @@ public:
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 
 public:
-
-	Render* render;
 
 	List<SDL_Texture*> textures;
 };

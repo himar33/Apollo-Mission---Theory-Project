@@ -1,53 +1,74 @@
 #include "Player.h"
+#include "Audio.h"
+#include "Render.h"
+#include "Input.h"
+#include "App.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
-Player::Player() : Entity(EntityType::PLAYER)
+#include "Log.h"
+#include "Defs.h"
+
+
+Player::Player() : Module()
 {
-    texture = NULL;
-    position = iPoint(12 * 16, 27 * 16);
-    jumpSpeed = 200.0f;
-
-    width = 16;
-    height = 32;
-
-    // Define Player animations
+	name.Create("player");
 }
 
-bool Player::Update(Input* input, float dt)
+Player::Player(iPoint pPosition, float pVelocity, SDL_Texture* pTexture): Module()
 {
-    #define GRAVITY 400.0f
-    #define PLAYER_MOVE_SPEED 200.0f
-    #define PLAYER_JUMP_SPEED 350.0f
-
-    if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y += (PLAYER_MOVE_SPEED * dt);
-    if (input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) position.y -= (PLAYER_MOVE_SPEED * dt);
-    if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
-    if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
-
-    if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
-
-    // Calculate gravity acceleration
-    jumpSpeed += GRAVITY * dt;
-    position.y += (jumpSpeed * dt);
-
-    return true;
+	name.Create("player");
 }
 
-bool Player::Draw(Render* render)
+Player::~Player()
+{}
+
+bool Player::Start() 
 {
-    SDL_Rect rec = { 0, 0, 0, 0 };
-    render->DrawTexture(texture, position.x, position.y, &rec);
+	active = true;
+	// Create new ship
 
-    render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+	// Load textures and FX
+	texture = app->tex->Load("Assets/Textures/rocket.png");
 
-    return false;
+	position.x = 0;
+	position.y = 0;
+
+	return true;
 }
 
-void Player::SetTexture(SDL_Texture *tex)
+bool Player::Awake(pugi::xml_node& config)
 {
-    texture = tex;
+	LOG("Loading Player Parser");
+	bool ret = true;
+	
+	return true;
 }
 
-SDL_Rect Player::GetBounds()
+bool Player::PreUpdate() 
 {
-    return { position.x, position.y, width, height };
+	return true;
 }
+
+bool Player::Update(float dt) 
+{
+	return true;
+}
+
+bool Player::PostUpdate()
+{
+	app->render->DrawTexture(texture, position.x, position.y);
+	return true;
+}
+
+bool Player::CleanUp()
+{
+	if (!active)
+		return true;
+
+	app->tex->UnLoad(texture);
+	active = false;
+
+	return true;
+}
+

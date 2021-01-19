@@ -16,7 +16,7 @@ public:
 	virtual ~Window();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before quitting
 	bool CleanUp();
@@ -36,11 +36,11 @@ public:
 
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
+	uint width;
+	uint height;
 
 private:
 	SString title;
-	uint width;
-	uint height;
 	uint scale;
 };
 

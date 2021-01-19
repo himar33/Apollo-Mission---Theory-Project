@@ -3,24 +3,23 @@
 
 #include "Module.h"
 
-#include "List.h"
-
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
+#define MAX_FX 200
 
 struct _Mix_Music;
 struct Mix_Chunk;
 
-class AudioManager : public Module
+class Audio : public Module
 {
 public:
 
-	AudioManager();
+	Audio();
 
 	// Destructor
-	virtual ~AudioManager();
+	virtual ~Audio();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before quitting
 	bool CleanUp();
@@ -30,14 +29,19 @@ public:
 
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
+	bool Unload1Fx(int index);
+	bool UnloadFxs();
 
 	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat = 0);
+	bool PlayFx(int channel, unsigned int fx, int volume = 100);
 
 private:
 
 	_Mix_Music* music;
-	List<Mix_Chunk *> fx;
+	Mix_Chunk* fx[MAX_FX] = { nullptr };
+
+	uint volumeMusic = 100;
+	uint volumeFx = 100;
 };
 
 #endif // __AUDIO_H__

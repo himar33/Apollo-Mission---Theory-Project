@@ -7,8 +7,6 @@
 #define NUM_MOUSE_BUTTONS 5
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
-class Window;
-
 struct SDL_Rect;
 
 enum EventWindow
@@ -32,13 +30,13 @@ class Input : public Module
 
 public:
 
-	Input(Window* win);
+	Input();
 
 	// Destructor
 	virtual ~Input();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -68,13 +66,9 @@ public:
 	void GetMouseMotion(int& x, int& y);
 
 private:
-
-	Window* win;
-
 	bool windowEvents[WE_COUNT];
-	KeyState* keyboard;
+	KeyState*	keyboard;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
-
 	int	mouseMotionX;
 	int mouseMotionY;
 	int mouseX;

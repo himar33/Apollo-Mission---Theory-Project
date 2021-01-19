@@ -10,6 +10,17 @@
 #endif
 #define NULL  0
 
+#define	WINDOW_W  1920
+#define	WINDOW_H  1080
+
+#define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
+#define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
+
+#define METERS_TO_PIXELS(m) ((int) PIXELS_PER_METER * m)
+#define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
+
+#define CCOOLDOWNSCENE 3.5f
+
 // Deletes a buffer
 #define RELEASE( x ) \
 	{						\
@@ -57,7 +68,7 @@ template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
 inline const char* const PATH(const char* folder, const char* file)
 {
 	static char path[MID_STR];
-	sprintf_s(path, MID_STR, "%s/%s", folder, file);
+	sprintf_s(path, MID_STR, "%s%s", folder, file);
 	return path;
 }
 

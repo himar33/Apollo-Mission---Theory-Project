@@ -1,28 +1,24 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENEWIN_H__
+#define __SCENEWIN_H__
 
-#include "Module.h"
-#include "Animation.h"
 #include "SceneControl.h"
 
 struct SDL_Texture;
 
-class Scene : public SceneControl
+class SceneWin :public SceneControl
 {
 public:
 
-	Scene();
+	SceneWin();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~SceneWin();
 
 	// Called before render is available
 	bool Awake();
 
 	// Called before the first frame
 	bool Start();
-
-
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -35,7 +31,20 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	int GetNumThisScene()
+	{
+		return 0;
+	};
+
+
 private:
+
+	SDL_Texture* img;
+	SDL_Texture* bgText;
+	int speed = 65;
+	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
+	bool transition;
 };
 
-#endif // __SCENE_H__
+#endif // !__SCENEWIN_H__
+

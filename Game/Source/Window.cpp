@@ -20,7 +20,7 @@ Window::~Window()
 }
 
 // Called before render is available
-bool Window::Awake()
+bool Window::Awake(pugi::xml_node& config)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -35,12 +35,21 @@ bool Window::Awake()
 		// Create window
 		// L01: DONE 6: Load all required configurations from config.xml
 		Uint32 flags = SDL_WINDOW_SHOWN;
+		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		bool borderless = config.child("borderless").attribute("value").as_bool(false);
+		bool resizable = config.child("resizable").attribute("value").as_bool(false);
+		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
 
-		width = 980;
-		height = 720;
-		scale = 1;
+		width = config.child("resolution").attribute("width").as_int(640);
+		height = config.child("resolution").attribute("height").as_int(480);
+		scale = config.child("resolution").attribute("scale").as_int(1);
 
-		window = SDL_CreateWindow("Apollo Mission", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+		if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
+		if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;
+		if(resizable == true) flags |= SDL_WINDOW_RESIZABLE;
+		if(fullscreen_window == true) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+		window = SDL_CreateWindow(app->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		if(window == NULL)
 		{

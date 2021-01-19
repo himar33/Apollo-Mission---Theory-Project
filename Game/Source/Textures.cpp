@@ -1,5 +1,6 @@
-#include "Textures.h"
+#include "App.h"
 #include "Render.h"
+#include "Textures.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -7,11 +8,9 @@
 #include "SDL_image/include/SDL_image.h"
 //#pragma comment(lib, "../Game/Source/External/SDL_image/libx86/SDL2_image.lib")
 
-Textures::Textures(Render* render) : Module()
+Textures::Textures() : Module()
 {
 	name.Create("textures");
-
-	this->render = render;
 }
 
 // Destructor
@@ -19,7 +18,7 @@ Textures::~Textures()
 {}
 
 // Called before render is available
-bool Textures::Awake()
+bool Textures::Awake(pugi::xml_node& config)
 {
 	LOG("Init Image library");
 	bool ret = true;
@@ -101,7 +100,7 @@ bool Textures::UnLoad(SDL_Texture* texture)
 // Translate a surface into a texture
 SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface)
 {
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(render->renderer, surface);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(app->render->renderer, surface);
 
 	if(texture == NULL)
 	{

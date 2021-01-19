@@ -1,28 +1,24 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENELOSE_H__
+#define __SCENELOSE_H__
 
-#include "Module.h"
-#include "Animation.h"
 #include "SceneControl.h"
 
 struct SDL_Texture;
 
-class Scene : public SceneControl
+class SceneLose : public SceneControl
 {
 public:
 
-	Scene();
+	SceneLose();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~SceneLose();
 
 	// Called before render is available
 	bool Awake();
 
 	// Called before the first frame
 	bool Start();
-
-
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -36,6 +32,13 @@ public:
 	bool CleanUp();
 
 private:
+
+	SDL_Texture* img;
+	SDL_Texture* imgTex;
+	int speed = 65;
+	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
+	bool transition;
+	bool keyPressed;
 };
 
-#endif // __SCENE_H__
+#endif // __SCENELOSE_H__

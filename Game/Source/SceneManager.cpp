@@ -1,11 +1,11 @@
 #include "SceneManager.h"
 
-#include "SceneGameplay.h"
+#include "Scene.h"
 
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
-
+#include "Audio.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -17,7 +17,11 @@
 
 SceneManager::SceneManager(Input* input, Render* render, Textures* tex) : Module()
 {
-	name.Create("scenemanager");
+	name.Create("scene_manager");
+	scene = new Scene();
+
+	AddScene(scene, true);
+
 
 	onTransition = false;
 	fadeOutCompleted = false;
@@ -44,9 +48,8 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
-	current = new SceneGameplay();
-	current->Load(tex);
-
+	current = new Scene();
+	current->Start();
 	next = nullptr;
 
 	return true;
@@ -55,17 +58,19 @@ bool SceneManager::Start()
 // Called each loop iteration
 bool SceneManager::PreUpdate()
 {
-
 	return true;
 }
 
 // Called each loop iteration
 bool SceneManager::Update(float dt)
 {
+	bool ret = true;
+	if (!pause && (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) && (current->name == "scene"))
+		pause = !pause;
+
 	if (!onTransition)
 	{
-
-		current->Update(input, dt);
+		ret = current->Update(dt);
 	}
 	else
 	{
@@ -79,9 +84,8 @@ bool SceneManager::Update(float dt)
 			{
 				transitionAlpha = 1.0f;
 
-				current->Unload();	// Unload current screen
-				next->Load(tex);	// Load next screen
-
+				current->CleanUp();	// Unload current screen
+				next->Start();	// Load next screen
 				RELEASE(current);	// Free current pointer
 				current = next;		// Assign next pointer
 				next = nullptr;
@@ -103,15 +107,6 @@ bool SceneManager::Update(float dt)
 		}
 	}
 
-	// Draw current scene
-	current->Draw(render);
-
-	// Draw full screen rectangle in front of everything
-	if (onTransition)
-	{
-		render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, (unsigned char)(255.0f * transitionAlpha) });
-	}
-
 	if (current->transitionRequired)
 	{
 		onTransition = true;
@@ -120,31 +115,57 @@ bool SceneManager::Update(float dt)
 
 		switch (current->nextScene)
 		{
-			case SceneType::GAMEPLAY: next = new SceneGameplay(); break;
-			default: break;
+		case SceneType::LEVEL1: next = new Scene(); break;
+		default: break;
 		}
 
 		current->transitionRequired = false;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
 
-	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) return false;
-	return true;
+	return ret;
 }
 
 // Called each loop iteration
 bool SceneManager::PostUpdate()
 {
 	bool ret = true;
-
+	// Draw current scene
+	current->PostUpdate();
+	// Draw full screen rectangle in front of everything
+	if (onTransition)
+	{
+		render->DrawRectangle({ -app->render->camera.x, -app->render->camera.y, WINDOW_W, WINDOW_H }, 0, 0, 0, (unsigned char)(255.0f * transitionAlpha));
+	}
 	return ret;
+}
+
+void SceneManager::AddScene(SceneControl* scene, bool active)
+{
+	scene->active = active;
+	scenes.Add(scene);
 }
 
 // Called before quitting
 bool SceneManager::CleanUp()
 {
 	LOG("Freeing scene");
-
-	if (current != nullptr) current->Unload();
+	if (current != nullptr) current->CleanUp();
 
 	return true;
 }
+
+bool SceneManager::LoadState(pugi::xml_node& data)
+{
+	if (current->lastLevel == 1)current = scene;
+	current->LoadState(data);
+	return true;
+}
+
+bool SceneManager::SaveState(pugi::xml_node& data) const
+{
+	current->SaveState(data);
+	return true;
+}
+

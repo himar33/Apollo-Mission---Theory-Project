@@ -12,18 +12,18 @@
 // NOTE: Library linkage is configured in Linker Options
 //#pragma comment(lib, "../Game/Source/External/SDL_mixer/libx86/SDL2_mixer.lib")
 
-AudioManager::AudioManager() : Module()
+Audio::Audio() : Module()
 {
 	music = NULL;
 	name.Create("audio");
 }
 
 // Destructor
-AudioManager::~AudioManager()
+Audio::~Audio()
 {}
 
 // Called before render is available
-bool AudioManager::Awake()
+bool Audio::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Audio Mixer");
 	bool ret = true;
@@ -59,7 +59,7 @@ bool AudioManager::Awake()
 }
 
 // Called before quitting
-bool AudioManager::CleanUp()
+bool Audio::CleanUp()
 {
 	if(!active)
 		return true;
@@ -71,11 +71,7 @@ bool AudioManager::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	ListItem<Mix_Chunk*>* item;
-	for(item = fx.start; item != NULL; item = item->next)
-		Mix_FreeChunk(item->data);
-
-	fx.Clear();
+	UnloadFxs();
 
 	Mix_CloseAudio();
 	Mix_Quit();
@@ -85,7 +81,7 @@ bool AudioManager::CleanUp()
 }
 
 // Play a music file
-bool AudioManager::PlayMusic(const char* path, float fadeTime)
+bool Audio::PlayMusic(const char* path, float fadeTime)
 {
 	bool ret = true;
 
@@ -139,7 +135,7 @@ bool AudioManager::PlayMusic(const char* path, float fadeTime)
 }
 
 // Load WAV
-unsigned int AudioManager::LoadFx(const char* path)
+unsigned int Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
@@ -154,24 +150,61 @@ unsigned int AudioManager::LoadFx(const char* path)
 	}
 	else
 	{
-		fx.Add(chunk);
-		ret = fx.Count();
+		for (ret = 0; ret < MAX_FX; ++ret)
+		{
+			if (fx[ret] == nullptr)
+			{
+				fx[ret] = chunk;
+				break;
+			}
+		}
 	}
 
 	return ret;
 }
-
-// Play WAV
-bool AudioManager::PlayFx(unsigned int id, int repeat)
+bool Audio::Unload1Fx(int index)
 {
 	bool ret = false;
 
-	if(!active)
-		return false;
-
-	if(id > 0 && id <= fx.Count())
+	if (fx[index] != nullptr)
 	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_FreeChunk(fx[index]);
+		fx[index] = nullptr;
+		ret = true;
+	}
+
+	return ret;
+}
+// UnloadFx
+bool Audio::UnloadFxs()
+{
+	for (uint i = 0; i < MAX_FX; ++i)
+	{
+		if (fx[i] != nullptr)
+			Mix_FreeChunk(fx[i]);
+	}
+
+	return true;
+}
+
+
+// Play WAV
+bool Audio::PlayFx(int channel, unsigned int id, int volume)
+{
+	bool ret = false;
+
+	if (volume > 100) volume = 100;
+	else if (volume < 0) volume = 0;
+
+	if (fx[id] != nullptr)
+	{
+		if (volume == 0)
+			Mix_VolumeChunk(fx[id], volumeFx);
+		else
+			Mix_VolumeChunk(fx[id], volume);
+
+		Mix_PlayChannel(channel, fx[id], 0);
+		ret = true;
 	}
 
 	return ret;

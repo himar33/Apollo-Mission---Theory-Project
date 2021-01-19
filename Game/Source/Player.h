@@ -1,49 +1,40 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "Entity.h"
-#include "Input.h"
-#include "Render.h"
+#include "Textures.h"
 
-#include "Point.h"
-#include "SString.h"
+#include "Animation.h"
+#include "p2Point.h"
 
-#include "SDL/include/SDL.h"
 
-enum class PlayerAnim
-{
-    IDLE,
-    WALK,
-    JUMP,
-    CLIMB
-};
-
-class Player: public Entity
+class Player : public Module
 {
 public:
 
-    Player();
+	Player();
+	Player( iPoint pPosition, float velocity, SDL_Texture* pTexture);
+	virtual ~Player();
 
-    bool Update(Input* input, float dt);
+	bool Awake(pugi::xml_node&);
 
-    bool Draw(Render* render);
+	bool Start();
 
-    void SetTexture(SDL_Texture *tex);
+	bool PreUpdate();
 
-    SDL_Rect GetBounds();
+	bool Update(float dt);
 
-public:
+	bool PostUpdate();
 
-    SDL_Texture* texture;   // Player spritesheet
+	bool CleanUp();
 
-    // TODO: Define all animation properties
-    PlayerAnim currentAnim;
+private:
 
-    int width, height;
+	iPoint position;
+	float velocity;
+	SDL_Texture* texture = nullptr;
 
-    float jumpSpeed = 0.0f;
-    bool readyToJump = true;
-    bool hitObstacle = false;
 };
 
-#endif // __PLAYER_H__
+#endif // _PLAYER_H_
+
+
