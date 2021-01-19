@@ -21,8 +21,6 @@ Font::Font(const char* rtpFontFile, Textures* tex)
 	if (xmlNodeAtlas.empty() == false)
 	{
 		const pugi::char_t* path = xmlNodeAtlas.attribute("imagePath").as_string();
-		//int atlasWidth = xmlNodeAtlas.attribute("width").as_int();
-		//int atlasHeight = xmlNodeAtlas.attribute("height").as_int();
 
 		texture = tex->Load(PATH("Assets/Fonts/", path));
 
