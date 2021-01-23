@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Player.h"
 #include "HUD.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneManager = new SceneManager(input, render, tex);
 	player = new Player();
 	hud = new HUD();
+	physics = new Physics();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -37,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneManager);
 	AddModule(player);
 	AddModule(hud);
+	AddModule(physics);
 	// Render last to swap buffer
 	AddModule(render);
 }

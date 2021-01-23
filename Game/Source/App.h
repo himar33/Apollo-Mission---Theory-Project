@@ -16,11 +16,12 @@ class Window;
 class Input;
 class Render;
 class Textures;
-class Physics;
 class Audio;
 class SceneManager;
 class Player;
 class HUD;
+class Physics;
+
 class App
 {
 public:
@@ -99,11 +100,11 @@ public:
 	Input* input;
 	Render* render;
 	Textures* tex;
-	Physics* physics;
 	Audio* audio;
 	SceneManager* sceneManager;
 	Player* player;
 	HUD* hud;
+	Physics* physics;
 	//ModuleFonts* fonts;
 
 private:
