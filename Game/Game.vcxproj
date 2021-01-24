@@ -96,7 +96,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Body.cpp" />
-    <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\HUD.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -114,7 +113,6 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Body.h" />
-    <ClInclude Include="Source\Font.h" />
     <ClInclude Include="Source\HUD.h" />
     <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\PerfTimer.h" />

@@ -62,7 +62,8 @@ bool Player::Update(float dt)
 	{
 		app->audio->ResumeFx(1);
 		float angleInRadian = angleDir / 180 * M_PI;
-		SetPosition({ GetPosition().x + (float)sin(angleInRadian) * PLAYER_SPEED, GetPosition().y - (float)cos(angleInRadian) * PLAYER_SPEED });
+		AddForce({ GetPosition().x + (float)sin(angleInRadian) * PLAYER_SPEED,  GetPosition().y - (float)cos(angleInRadian) * PLAYER_SPEED });
+		//SetPosition({ GetPosition().x + (float)sin(angleInRadian) * PLAYER_SPEED, GetPosition().y - (float)cos(angleInRadian) * PLAYER_SPEED });
 		currentAnim = &engineOnAnim;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
