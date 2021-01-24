@@ -119,6 +119,8 @@ bool SceneManager::Update(float dt)
 		switch (current->nextScene)
 		{
 		case SceneType::LEVEL1: next = new Scene(); break;
+		case SceneType::WIN: next = new SceneWin(); break;
+		case SceneType::LOSE: next = new SceneLose(); break;
 		default: break;
 		}
 
