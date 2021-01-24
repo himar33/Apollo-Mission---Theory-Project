@@ -70,6 +70,8 @@ bool Scene::Start()
 
 	app->audio->PlayMusic("Assets/Audio/Music/ambient.wav");
 
+	loaded = true;
+
 	return true;
 }
 

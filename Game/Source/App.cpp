@@ -7,6 +7,8 @@
 #include "SceneManager.h"
 #include "HUD.h"
 #include "Physics.h"
+#include "Scene.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -227,9 +229,9 @@ void App::FinishUpdate()
 			SDL_Delay(cappedMs- tmpFPS);
 	}
 
-
+	
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u",
 		averageFps, lastFrameMs, framesOnLastSecond, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);

@@ -133,3 +133,16 @@ void Body::SetMass(float _mass)
 	mass = _mass;
 }
 // ------------------------ //
+
+// ----- INERTIA METHODS ----- //
+// Inertia getter
+float Body::GetInertia() const
+{
+	return inertia;
+}
+// Inertia setter
+void Body::SetInertia(float _inertia)
+{
+	inertia = _inertia;
+}
+// --------------------------- //

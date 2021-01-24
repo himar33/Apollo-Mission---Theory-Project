@@ -20,6 +20,9 @@ Player::Player(fPoint position, float mass, SDL_Rect rect) : Body(position, mass
 
 	pRect = rect;
 
+	float in = (float)pRect.w * (float)pRect.h * (float)pRect.h * (float)pRect.h / 12;
+	SetInertia(in);
+
 	engineOnAnim.PushBack({ 18,0,17,48 });
 	engineOnAnim.PushBack({ 36,0,18,48 });
 	engineOnAnim.PushBack({ 55,0,17,48 });
@@ -62,15 +65,14 @@ bool Player::Update(float dt)
 	{
 		app->audio->ResumeFx(1);
 		float angleInRadian = angleDir / 180 * M_PI;
-		AddForce({ GetPosition().x + (float)sin(angleInRadian) * PLAYER_SPEED,  GetPosition().y - (float)cos(angleInRadian) * PLAYER_SPEED });
-		//SetPosition({ GetPosition().x + (float)sin(angleInRadian) * PLAYER_SPEED, GetPosition().y - (float)cos(angleInRadian) * PLAYER_SPEED });
+		AddForce({ (float)sin(angleInRadian) * PLAYER_FORCE, (float)cos(angleInRadian) * PLAYER_FORCE });
 		currentAnim = &engineOnAnim;
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		float angleInRadian = angleDir / 180 * M_PI;
 		if (app->physics->CheckCollision(app->sceneManager->scene->earth, app->sceneManager->scene->player) == false)
-		SetPosition({ GetPosition().x - (float)sin(angleInRadian) * PLAYER_SPEED, GetPosition().y + (float)cos(angleInRadian) * PLAYER_SPEED });
+		SetPosition({ GetPosition().x - (float)sin(angleInRadian) * PLAYER_FORCE, GetPosition().y + (float)cos(angleInRadian) * PLAYER_FORCE });
 		currentAnim = &engineOnAnim;
 	}
 	else

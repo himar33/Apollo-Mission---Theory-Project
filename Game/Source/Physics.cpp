@@ -48,8 +48,9 @@ bool Physics::Update(float dt)
 	{
 		AddWorldForces(item->data, dt);
 		NewtonSecondLaw(item->data, dt);
-		VerletIntegrator(item->data->GetPosition(), item->data->GetVelocity(), item->data->GetAcceleration(), dt);
-		item->data->ResetForces(); 
+		VerletIntegrator(item->data, dt);
+		item->data->ResetForces();
+		item->data->ResetTorques();
 	}
 
 	return true;
@@ -155,40 +156,81 @@ void Physics::NewtonSecondLaw(Player* player, float dt)
 	acceleration.x = player->GetTotalForces().x / player->GetMass();
 	acceleration.y = player->GetTotalForces().y / player->GetMass();
 	player->SetAcceleration(acceleration);
+
+	float angularAcceleration = player->GetTotalTorques() / player->GetInertia();
+	player->SetAngularAcceleration(angularAcceleration);
 }
 // Verlet Integrator
-void Physics::VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt)
+void Physics::VerletIntegrator(Player* player, float dt)
 {
-	x.x += v.x * dt + 0.5f * a.x * dt * dt;
-	v.x += a.x * dt;
+	float posX = player->GetPosition().x + player->GetVelocity().x * dt + 0.5f * player->GetAcceleration().x * dt * dt;
+	float posY = player->GetPosition().y + player->GetVelocity().y * dt + 0.5f * player->GetAcceleration().y * dt * dt;
+	float velX = player->GetVelocity().x + player->GetAcceleration().x * dt;
+	float velY = player->GetVelocity().y + player->GetAcceleration().y * dt;
+	player->SetPosition({ posX, posY });
+	player->SetVelocity({ velX, velY });
 
-	x.y += v.y * dt + 0.5f * a.y * dt * dt;
-	v.y += a.y * dt;
+
+	player->SetAgularPosition(player->GetAngularPosition() + player->GetAngularVelocity() * dt + 0.5f * player->GetAngularAcceleration() * dt * dt);
+	player->SetAngularVelocity(player->GetAngularVelocity() + player->GetAngularAcceleration() * dt);
 }
 
 
 fPoint Physics::CalculateGravity(Player* player, Planet* planet, float dt)
 {
-	float distance = CalculateDistance(player->GetPosition(), planet->GetPosition());
+	float distance = CalculateDistance(player->GetPosition(), planet->GetPosition()) * PX_TO_KM;
+	fPoint gravityForce = { 0.0f, 0.0f };
 
-	float gravityModule = CalculateGravityRelativeToDistance(planet, distance);
+	if (distance >= planet->GetRadius())
+	{
+		float gravityModule = CalculateGravityRelativeToDistance(planet, distance);
 
-	fVector direction = { player->GetPosition().x - planet->GetPosition().x, player->GetPosition().y - planet->GetPosition().y };
-	direction.Normalize();
-	fVector xAxis = { 0.0f, 1.0f };
+		fVector direction = { player->GetPosition().x - planet->GetPosition().x, player->GetPosition().y - planet->GetPosition().y };
+		direction.Normalize();
+		
 
-	float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
-	float angle = acos(cosAng);
+ 		if (player->GetPosition().x > planet->GetPosition().x &&
+			player->GetPosition().y < planet->GetPosition().y)
+		{
+			fVector xAxis = { 0.0, 1.0f };
+			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
+			float angle = acos(cosAng);
+			gravityForce = { - (float)sin(angle) * gravityModule, - (float)cos(angle) * gravityModule };
+		}
+		else if(player->GetPosition().x < planet->GetPosition().x &&
+			player->GetPosition().y < planet->GetPosition().y)
+		{
+			fVector xAxis = { 0.0f, -1.0f };
+			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
+			float angle = acos(cosAng);
+			gravityForce = { (float)sin(angle) * gravityModule, - (float)cos(angle) * gravityModule };
+		}
+		else if (player->GetPosition().x < planet->GetPosition().x  &&
+			player->GetPosition().y > planet->GetPosition().y)
+		{
+			fVector xAxis = { 0.0f, -1.0f };
+			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
+			float angle = acos(cosAng);
+			gravityForce = { (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
+		}
+		else if (player->GetPosition().x > planet->GetPosition().x &&
+			player->GetPosition().y > planet->GetPosition().y)
+		{
+			fVector xAxis = { 0.0f, 1.0f };
+			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
+			float angle = acos(cosAng);
+			gravityForce = { - (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
+		}
+	}
 
-	fPoint gravityForce = { (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule};
+	gravityForce.x *= PX_TO_KM;
+	gravityForce.y *= PX_TO_KM;
 
 	return gravityForce;
 }
 float Physics::CalculateGravityRelativeToDistance(Planet* planet, float distance)
 {
-	distance = distance * PX_TO_KM;
-
-	float g = planet->GetGravity() / pow((planet->GetRadius() / distance), 2);
+	float g = planet->GetGravity() / pow(distance / (planet->GetRadius()), 2);
 
 	return g;
 }
