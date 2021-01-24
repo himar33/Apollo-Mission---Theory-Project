@@ -46,6 +46,7 @@ public:
 
 	bool CheckCollision(Planet* planet, Player* body);
 	double distanceSquared(int x1, int y1, int x2, int y2);
+	float CalculateDistance(fPoint pos1, fPoint pos2);
 
 	void AddPlayer(Player* player);
 	void RemovePlayer(Player* player);
@@ -54,6 +55,9 @@ public:
 private:
 
 	// ----- PHYSICS METHODS ----- //
+	void AddWorldForces(Player* player, float dt);
+	fPoint CalculateGravity(Player* player, Planet* planet, float dt);
+	void NewtonSecondLaw(Player* player, float dt);
 	void VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt);
 	// --------------------------- //
 

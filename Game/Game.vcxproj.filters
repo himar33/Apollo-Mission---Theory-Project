@@ -12,9 +12,6 @@
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Window.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -54,6 +51,9 @@
     <ClCompile Include="Source\Planet.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -86,9 +86,6 @@
     </ClInclude>
     <ClInclude Include="Source\PerfTimer.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\Window.h">
       <Filter>Modules</Filter>
@@ -136,6 +133,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Planet.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

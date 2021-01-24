@@ -63,6 +63,16 @@ void Body::StopLinearMovement()
 	v = { 0.0f, 0.0f };
 	a = { 0.0f, 0.0f };
 }
+// Reset the total Forces on the body
+void Body::ResetForces()
+{
+	totalForces = { 0.0f, 0.0f };
+}
+// Add a force to totalForces
+void Body::AddForce(fPoint _f)
+{
+	totalForces += _f;
+}
 // ----------------------------------- //
 
 
@@ -87,6 +97,16 @@ void Body::StopAngularMovement()
 {
 	angularVelocity = 0.0f;
 	angularAcceleration = 0.0f;
+}
+// Reset the total Torques on the body
+void Body::ResetTorques()
+{
+	totalTorques = 0.0f;
+}
+// Add a torque to the totalTorques
+void Body::AddTorque(float _t)
+{
+	totalTorques += _t;
 }
 // ------------------------------------ //
 

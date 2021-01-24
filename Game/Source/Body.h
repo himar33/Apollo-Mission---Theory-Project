@@ -28,10 +28,14 @@ public:
 	void SetVelocity(fPoint _v);
 	void SetAcceleration(fPoint _a);
 	void StopLinearMovement();
+	void ResetForces();
+	void AddForce(fPoint _f);
 	void SetAgularPosition(float ax);
 	void SetAngularVelocity(float av);
 	void SetAngularAcceleration(float aa);
 	void StopAngularMovement();
+	void ResetTorques();
+	void AddTorque(float _t);
 	void SetMass(float _mass);
 	// ------------------------ //
 
@@ -45,11 +49,13 @@ private:
 	fPoint x = { 0.0f, 0.0f };
 	fPoint v = { 0.0f, 0.0f };
 	fPoint a = { 0.0f, 0.0f };
+	fPoint totalForces = { 0.0f, 0.0f };
 
 	// Angular movement properties
 	float angularPosition = 0;
 	float angularVelocity = 0;
 	float angularAcceleration = 0;
+	float totalTorques = 0.0f;
 
 	float mass = 1.0f;
 

@@ -45,6 +45,13 @@ bool Physics::Start()
 // Called each loop iteration
 bool Physics::Update(float dt)
 {
+	for (ListItem<Player*>* item = players.start; item != NULL; item = item->next)
+	{
+		AddWorldForces(item->data, dt);
+		NewtonSecondLaw(item->data, dt);
+		VerletIntegrator(item->data->GetPosition(), item->data->GetVelocity(), item->data->GetAcceleration(), dt);
+		item->data->ResetForces(); 
+	}
 
 	return true;
 }
@@ -142,4 +149,39 @@ void Physics::RemovePlayer(Player* player)
 {
 	int i = players.Find(player);
 	players.Del(players.At(i));
+}
+
+
+void Physics::AddWorldForces(Player* player, float dt)
+{
+	for (ListItem<Planet*>* planet = planets.start; planet != NULL; planet = planet->next)
+	{
+		fPoint force = CalculateGravity(player, planet->data, dt);
+	}
+}
+
+void Physics::NewtonSecondLaw(Player* player, float dt)
+{
+
+}
+
+
+fPoint Physics::CalculateGravity(Player* player, Planet* planet, float dt)
+{
+	float distance = CalculateDistance(player->GetPosition(), planet->GetPosition());
+
+	fVector gravity = { player->GetPosition().x - planet->GetPosition().x, player->GetPosition().y - planet->GetPosition().y };
+	gravity.Normalize();
+	fVector xAxis = { 0.0f, 1.0f };
+
+	//float cosAng = dot()
+
+	return { 0.0f, 0.0f };
+}
+
+float Physics::CalculateDistance(fPoint pos1, fPoint pos2)
+{
+	float res = sqrt(pow(pos2.x - pos1.x, 2) + pow(pos2.y - pos1.y, 2));
+
+	return res;
 }
