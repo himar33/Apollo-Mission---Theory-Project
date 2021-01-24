@@ -30,17 +30,10 @@ bool SceneWin::Awake()
 
 bool SceneWin::Start()
 {
-	app->SetLastScene((Module*)this);
-	transition = false;
 
-	img = app->tex->Load("Assets/Textures/win_screen.png");
-	bgText = app->tex->Load("Assets/Textures/tex_win.png");
-	app->audio->PlayMusic("Assets/Audio/Music/music_win.ogg");
-
-	SDL_QueryTexture(bgText, NULL, NULL, &imgW, &imgH);
-	app->render->camera.x = app->render->camera.y = 0;
-	imgX = WINDOW_W / 2 - imgW / 2;
-	imgY = WINDOW_H;
+	img = app->tex->Load("Assets/Textures/win_text.png");
+	bgText = app->tex->Load("Assets/Textures/win_bg.png");
+	trophyText = app->tex->Load("Assets/Textures/trophy.png");
 
 	return true;
 }
@@ -52,11 +45,11 @@ bool SceneWin::PreUpdate()
 
 bool SceneWin::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || imgY + imgH < 0)
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		TransitionToScene(SceneType::LEVEL1);
+		return false;
 	}
-	imgY -= dt * speed;
+
 	return true;
 }
 
@@ -64,8 +57,9 @@ bool SceneWin::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawTexture(img, app->render->camera.x, app->render->camera.y);
-	app->render->DrawTexture(bgText, imgX, imgY);
+	app->render->DrawTexture(bgText, 0, 0);
+	app->render->DrawTexture(img, 0, 0);
+	app->render->DrawTexture(trophyText, 400, 300);
 
 	return ret;
 }
@@ -77,11 +71,7 @@ bool SceneWin::CleanUp()
 
 	LOG("Freeing scene");
 	Mix_HaltMusic();
-	app->tex->UnLoad(img);
-	app->tex->UnLoad(bgText);
-	img = nullptr;
-	bgText = nullptr;
+
 	active = false;
 	return true;
 }
-

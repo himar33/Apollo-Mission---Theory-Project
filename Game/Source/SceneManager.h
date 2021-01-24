@@ -77,7 +77,6 @@ private:
 	bool ViewRectangles = false;
 
 public:
-
 	SceneControl* current;
 
 	SceneLogo* sceneLogo;

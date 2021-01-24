@@ -3,6 +3,9 @@
 
 #include "SceneControl.h"
 
+#include "Animation.h"
+
+
 struct SDL_Texture;
 
 class SceneLose : public SceneControl
@@ -19,6 +22,8 @@ public:
 
 	// Called before the first frame
 	bool Start();
+
+
 	// Called before all Updates
 	bool PreUpdate();
 
@@ -33,12 +38,13 @@ public:
 
 private:
 
-	SDL_Texture* img;
-	SDL_Texture* imgTex;
-	int speed = 65;
-	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
-	bool transition;
-	bool keyPressed;
+	SDL_Texture* expTex = nullptr;
+	SDL_Texture* bgTex = nullptr;
+	SDL_Texture* textTex = nullptr;
+	Animation expAnim;
+	Animation* currentAnim = nullptr;
+
+	uint loseFx;
 };
 
 #endif // __SCENELOSE_H__

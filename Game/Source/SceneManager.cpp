@@ -2,6 +2,8 @@
 
 #include "Scene.h"
 #include "SceneIntro.h"
+#include "SceneLose.h"
+#include "SceneWin.h"
 
 #include "Input.h"
 #include "Render.h"
@@ -49,7 +51,7 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
-	current = new SceneIntro();
+	current = new SceneLose();
 	current->Start();
 	next = nullptr;
 

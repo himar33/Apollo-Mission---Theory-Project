@@ -58,7 +58,8 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) 
 {
-
+	app->render->camera.x = (GetPosition().x - app->render->camera.w / 2) * -1;
+	app->render->camera.y = (GetPosition().y - app->render->camera.h / 2) * -1;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		app->audio->ResumeFx(1);
@@ -88,9 +89,6 @@ bool Player::Update(float dt)
 		angleDir += 5;
 		currentAnim = &engineOffAnim;
 	}
-
-	app->render->camera.x = (GetPosition().x - app->render->camera.w/2) * -1;
-	app->render->camera.y = (GetPosition().y - app->render->camera.h / 2) * -1;
 
 	return true;
 }

@@ -54,6 +54,12 @@
     <ClCompile Include="Source\SceneIntro.cpp">
       <Filter>Gameplay\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneLose.cpp">
+      <Filter>Gameplay\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneWin.cpp">
+      <Filter>Gameplay\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -136,6 +142,12 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneIntro.h">
+      <Filter>Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneLose.h">
+      <Filter>Gameplay\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneWin.h">
       <Filter>Gameplay\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

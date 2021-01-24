@@ -39,12 +39,9 @@ public:
 
 private:
 
-	SDL_Texture* img;
-	SDL_Texture* bgText;
-	int speed = 65;
-	int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
-	bool transition;
+	SDL_Texture* img = nullptr;
+	SDL_Texture* bgText = nullptr;
+	SDL_Texture* trophyText = nullptr;
 };
 
 #endif // !__SCENEWIN_H__
-

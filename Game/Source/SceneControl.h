@@ -13,6 +13,7 @@ enum class SceneType
 {
 	LEVEL1,
 	INTRO,
+	LOSE,
 };
 
 class SceneControl
