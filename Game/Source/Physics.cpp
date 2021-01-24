@@ -1,6 +1,10 @@
 #include "App.h"
+
 #include "Physics.h"
 
+#include "Body.h"
+#include "Planet.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -76,4 +80,16 @@ void Physics::RemovePlanet(Planet* planet)
 {
 	int i = planets.Find(planet);
 	planets.Del(planets.At(i));
+}
+
+
+void Physics::AddPlayer(Player* player)
+{
+	players.Add(player);
+}
+
+void Physics::RemovePlayer(Player* player)
+{
+	int i = players.Find(player);
+	players.Del(players.At(i));
 }

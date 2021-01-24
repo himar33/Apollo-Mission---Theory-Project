@@ -1,5 +1,8 @@
 #include "Body.h"
 
+#include "Animation.h"
+
+
 // ----- LINEAR MOVEMENT GETTERS ----- //
 // Position Getter
 fPoint Body::GetPosition() const

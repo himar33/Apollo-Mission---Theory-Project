@@ -2,6 +2,8 @@
 #define __BODY_H__
 
 #include "p2Point.h"
+#include "SString.h"
+
 #include "Animation.h"
 
 
@@ -32,6 +34,10 @@ public:
 	void StopAngularMovement();
 	void SetMass(float _mass);
 	// ------------------------ //
+
+public:
+
+	SString name;
 
 private:
 

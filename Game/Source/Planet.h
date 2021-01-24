@@ -3,6 +3,8 @@
 
 #include "Body.h"
 
+#include "p2Point.h"
+
 
 class Planet : public Body
 {
@@ -23,17 +25,12 @@ public:
 	void SetRadius(float _radius);
 	// -------------------------- //
 
-
-
 private:
 
 	// ----- PLANET VARIABLES ----- //
 	float gravity;
 	float radius;
 	// ---------------------------- //
-
 };
-
-
 
 #endif // !__PLANET_H__

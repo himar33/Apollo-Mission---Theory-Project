@@ -1,6 +1,7 @@
 #include "Planet.h"
 
-#include "p2Point.h"
+
+
 
 // Constructor
 Planet::Planet(float _gravity, float _radius, fPoint position, float mass) : Body(position, mass)
