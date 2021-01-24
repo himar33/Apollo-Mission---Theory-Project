@@ -1,15 +1,20 @@
 #include "App.h"
+
+#include "Scene.h"
+
 #include "Input.h"
 #include "Textures.h"
 #include "Font.h"
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
 #include "Player.h"
 #include "HUD.h"
 #include "Physics.h"
 #include "SceneManager.h"
+#include "Animation.h"
+#include "Planet.h"
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -54,6 +59,9 @@ bool Scene::Start()
 	earth = CreatePlanet(9.807, 6371, { 100, 100 }, 5000);
 	moon = CreatePlanet(1.62, 1737, { earth->GetPosition().x + 100 + 384400 * KM_TO_PX , 100 }, 2000);
 
+	player = CreatePlayer({ 0.0f, 0.0f }, 100);
+	player->Start();
+
 	earthTex = app->tex->Load("Assets/Textures/earth.png");
 	moonTex = app->tex->Load("Assets/Textures/moon.png");
 
@@ -74,6 +82,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	player->Update(dt);
 	return true;
 }
 
@@ -92,6 +101,8 @@ bool Scene::PostUpdate()
 	app->render->DrawTexture(moonTex, moon->GetPosition().x, moon->GetPosition().y, &moonCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
 	moonCurrentAnim->Update();
 
+	player->PostUpdate();
+
 	return ret;
 }
 
@@ -103,7 +114,7 @@ bool Scene::CleanUp()
 
 	DeletePlanet(earth);
 	DeletePlanet(moon);
-
+	
 
 	LOG("Freeing scene");
 	active = false;
@@ -126,4 +137,22 @@ void Scene::DeletePlanet(Planet* planet)
 	app->physics->RemovePlanet(planet);
 	delete planet;
 	planet = nullptr;
+}
+
+
+Player* Scene::CreatePlayer(fPoint position, float mass)
+{
+	Player* player = new Player(position, mass);
+
+	app->physics->AddPlayer(player);
+
+	return player;
+}
+
+void Scene::DeletePlayer(Player* player)
+{
+	player->CleanUp();
+	app->physics->RemovePlayer(player);
+	delete player;
+	player = nullptr;
 }

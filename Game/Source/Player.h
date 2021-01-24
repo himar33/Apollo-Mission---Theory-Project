@@ -1,36 +1,38 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "Textures.h"
+#include "Body.h"
 
-#include "Animation.h"
 #include "p2Point.h"
+#include "Animation.h"
+
+#define PLAYER_SPEED 10.0f
 
 
-class Player : public Module
+struct SDL_Rect;
+struct SDL_Texture;
+
+class Player : public Body
 {
 public:
 
-	Player();
-	Player( iPoint pPosition, float velocity, SDL_Texture* pTexture);
+	Player(fPoint position, float mass);
 	virtual ~Player();
-
-	bool Awake(pugi::xml_node&);
 
 	bool Start();
 
 	bool PreUpdate();
-
 	bool Update(float dt);
-
 	bool PostUpdate();
 
 	bool CleanUp();
 
+	SDL_Rect GetRect() { return rect; };
+
 private:
 
-	iPoint position;
-	float velocity;
+	SDL_Rect rect = { 0, 0, 0, 0 };
+
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
 	float angleDir = 0.0f;
@@ -43,5 +45,3 @@ private:
 };
 
 #endif // _PLAYER_H_
-
-

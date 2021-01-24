@@ -1,13 +1,13 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "Module.h"
-#include "Animation.h"
 #include "SceneControl.h"
 
-#include "Planet.h"
+#include "Animation.h"
 
 
+class Player;
+class Planet;
 struct SDL_Texture;
 
 class Scene : public SceneControl
@@ -42,18 +42,22 @@ private:
 
 	Planet* CreatePlanet(float gravity, float radius, fPoint position, float mass);
 	void DeletePlanet(Planet* planet);
+	Player* CreatePlayer(fPoint position, float mass);
+	void DeletePlayer(Player* player);
 
 private:
+
+	Player* player = nullptr;
 
 	SDL_Texture* earthTex = nullptr;
 	Animation* earthCurrentAnim = nullptr;
 	Animation earthAnim;
-	Planet* earth;
+	Planet* earth = nullptr;
 
 	SDL_Texture* moonTex = nullptr;
 	Animation* moonCurrentAnim = nullptr;
 	Animation moonAnim;
-	Planet* moon;
+	Planet* moon = nullptr;
 };
 
 #endif // __SCENE_H__

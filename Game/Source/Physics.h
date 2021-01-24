@@ -5,13 +5,14 @@
 
 #include "p2Point.h"
 #include "List.h"
-#include "Body.h"
-#include "Planet.h"
 
 
 #define MOON_G_FROM_EARTH (9.807f * (6371 / 384400)^2)
 #define EARTH_G_FROM_MOON ()
 
+
+class Player;
+class Planet;
 
 class Physics : public Module
 {
@@ -42,8 +43,12 @@ public:
 	// ----- PHYSICS METHODS ----- //
 	void AddPlanet(Planet* planet);
 	void RemovePlanet(Planet* planet);
-	bool CheckCollision(Planet* planet, Body* body);
+
+	bool CheckCollision(Planet* planet, Player* body);
 	double distanceSquared(int x1, int y1, int x2, int y2);
+
+	void AddPlayer(Player* player);
+	void RemovePlayer(Player* player);
 	// --------------------------- //
 	
 private:
@@ -56,6 +61,7 @@ public:
 
 	// ----- PHYSICS VARIABLES ----- //
 	List<Planet*> planets;
+	List<Player*> players;
 	// ----------------------------- //
 
 private:

@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "SceneManager.h"
-#include "Player.h"
 #include "HUD.h"
 #include "Physics.h"
 
@@ -26,7 +25,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	sceneManager = new SceneManager(input, render, tex);
-	player = new Player();
 	hud = new HUD();
 	physics = new Physics();
 
@@ -37,7 +35,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(sceneManager);
-	AddModule(player);
 	AddModule(hud);
 	AddModule(physics);
 	// Render last to swap buffer
