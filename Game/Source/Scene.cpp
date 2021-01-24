@@ -56,10 +56,10 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	earth = CreatePlanet(9.807, 6371, { 100, 100 }, 5000);
+	earth = CreatePlanet(9.807, 6371, { 200, 200 }, 5000);
 	moon = CreatePlanet(1.62, 1737, { earth->GetPosition().x + 100 + 384400 * KM_TO_PX , 100 }, 2000);
 
-	player = CreatePlayer({ 0.0f, 0.0f }, 100);
+	player = CreatePlayer({ 0.0f, 0.0f }, 100, { 0, 0, 18, 48 });
 	player->Start();
 
 	earthTex = app->tex->Load("Assets/Textures/earth.png");
@@ -83,6 +83,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	player->Update(dt);
+
 	return true;
 }
 
@@ -93,7 +94,11 @@ bool Scene::PostUpdate()
 
 	int offSetX = earthCurrentAnim->GetCurrentFrame().w / 2;
 	int offSetY = earthCurrentAnim->GetCurrentFrame().h / 2;
-	app->render->DrawTexture(earthTex, earth->GetPosition().x, earth->GetPosition().y, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
+	app->render->DrawTexture(earthTex, earth->GetPosition().x - offSetX, earth->GetPosition().y - offSetY, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f);
+	if (app->debug == true)
+	{
+		app->render->DrawCircle2(earth->GetPosition().x, earth->GetPosition().y, earth->GetRadius() * KM_TO_PX, 120);
+	}
 	earthCurrentAnim->Update();
 
 	offSetX = moonCurrentAnim->GetCurrentFrame().w / 2;
@@ -140,9 +145,9 @@ void Scene::DeletePlanet(Planet* planet)
 }
 
 
-Player* Scene::CreatePlayer(fPoint position, float mass)
+Player* Scene::CreatePlayer(fPoint position, float mass, SDL_Rect rect)
 {
-	Player* player = new Player(position, mass);
+	Player* player = new Player(position, mass, rect);
 
 	app->physics->AddPlayer(player);
 

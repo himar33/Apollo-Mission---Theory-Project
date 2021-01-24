@@ -16,7 +16,7 @@ class Player : public Body
 {
 public:
 
-	Player(fPoint position, float mass);
+	Player(fPoint position, float mass, SDL_Rect rect);
 	virtual ~Player();
 
 	bool Start();
@@ -27,13 +27,14 @@ public:
 
 	bool CleanUp();
 
-	SDL_Rect GetRect() { return rect; };
+	SDL_Rect GetRect() { return pRect; };
 
 private:
 
-	SDL_Rect rect = { 0, 0, 0, 0 };
+	SDL_Rect pRect = { 0, 0, 0, 0 };
 
 	SDL_Texture* texture = nullptr;
+	SDL_Texture* collTexture = nullptr;
 	Animation* currentAnim = nullptr;
 	float angleDir = 0.0f;
 

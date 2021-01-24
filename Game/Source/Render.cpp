@@ -266,7 +266,7 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	return ret;
 }
-bool Render::DrawCircle2( int centreX, int centreY, int radius)
+bool Render::DrawCircle2( int centreX, int centreY, int radius, Uint8 alpha)
 {
 	const int diameter = (radius * 2);
 
@@ -279,14 +279,14 @@ bool Render::DrawCircle2( int centreX, int centreY, int radius)
 	while (x >= y)
 	{
 		//  Each of the following renders an octant of the circle
-		DrawLine(centreX + x, centreY - y, centreX + x, centreY + y, 255,0,0);
-		DrawLine(centreX + x, centreY + y, centreX - x, centreY - y, 255,0,0);
-		DrawLine(centreX - x, centreY - y, centreX - x, centreY + y, 255,0,0);
-		DrawLine(centreX - x, centreY + y, centreX + y, centreY - x, 255,0,0);
-		DrawLine(centreX + y, centreY - x, centreX + y, centreY + x, 255,0,0);
-		DrawLine(centreX + y, centreY + x, centreX - y, centreY - x, 255,0,0);
-		DrawLine(centreX - y, centreY - x, centreX - y, centreY + x, 255,0,0);
-		DrawLine(centreX - y, centreY + x, centreX + x, centreY - y, 255,0,0);
+		DrawLine(centreX + x, centreY - y, centreX + x, centreY + y, 255,0,0, alpha);
+		DrawLine(centreX + x, centreY + y, centreX - x, centreY - y, 255,0,0, alpha);
+		DrawLine(centreX - x, centreY - y, centreX - x, centreY + y, 255,0,0, alpha);
+		DrawLine(centreX - x, centreY + y, centreX + y, centreY - x, 255,0,0, alpha);
+		DrawLine(centreX + y, centreY - x, centreX + y, centreY + x, 255,0,0, alpha);
+		DrawLine(centreX + y, centreY + x, centreX - y, centreY - x, 255,0,0, alpha);
+		DrawLine(centreX - y, centreY - x, centreX - y, centreY + x, 255,0,0, alpha);
+		DrawLine(centreX - y, centreY + x, centreX + x, centreY - y, 255,0,0, alpha);
 		/*SDL_RenderDrawPoint(renderer, centreX + x, centreY - y);
 		SDL_RenderDrawPoint(renderer, centreX + x, centreY + y);
 		SDL_RenderDrawPoint(renderer, centreX - x, centreY - y);

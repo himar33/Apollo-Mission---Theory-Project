@@ -112,9 +112,9 @@ bool Physics::CheckCollision(Planet* planet, Player* body)
 	////Find closest y offset
 	if (planet->GetPosition().y < body->GetPosition().y)
 	{
-		cY = body->GetPosition().x;
+		cY = body->GetPosition().y;
 	}
-	else if (planet->GetPosition().y > body->GetPosition().x + body->GetRect().h)
+	else if (planet->GetPosition().y > body->GetPosition().y + body->GetRect().h)
 	{
 		cY = body->GetPosition().y + body->GetRect().h;
 	}
@@ -123,8 +123,10 @@ bool Physics::CheckCollision(Planet* planet, Player* body)
 		cY = planet->GetPosition().y;
 	}
 
+	double distance = distanceSquared(planet->GetPosition().x, planet->GetPosition().y, cX, cY);
+	float rad = planet->GetRadius() * KM_TO_PX * planet->GetRadius() * KM_TO_PX;
 	//If the closest point is inside the circle
-	if (distanceSquared(planet->GetPosition().x, planet->GetPosition().y, cX, cY) < planet->GetRadius() * planet->GetRadius())
+	if (distanceSquared(planet->GetPosition().x, planet->GetPosition().y, cX, cY) < planet->GetRadius()*KM_TO_PX * planet->GetRadius()*KM_TO_PX)
 	{
 		//This box and the circle have collided
 		return true;

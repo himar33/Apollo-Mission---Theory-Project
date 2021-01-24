@@ -105,6 +105,8 @@ public:
 	Physics* physics;
 	//ModuleFonts* fonts;
 
+	bool debug;
+
 private:
 
 	int argc;
