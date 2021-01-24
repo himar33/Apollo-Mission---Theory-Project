@@ -171,4 +171,3 @@ bool SceneManager::SaveState(pugi::xml_node& data) const
 	current->SaveState(data);
 	return true;
 }
-

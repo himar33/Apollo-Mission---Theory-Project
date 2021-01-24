@@ -5,6 +5,8 @@
 #include "Body.h"
 #include "Planet.h"
 #include "Player.h"
+#include "SceneManager.h"
+#include "SceneControl.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -51,7 +53,25 @@ bool Physics::Update(float dt)
 		VerletIntegrator(item->data, dt);
 		item->data->ResetForces();
 		item->data->ResetTorques();
+
+
+		for (ListItem<Planet*>* planetItem = planets.start; planetItem != NULL; planetItem = planetItem->next)
+		{
+			bool coll = CheckCollision(planetItem->data, item->data);
+
+			if (planetItem->data->GetMass() == 2000 && coll == true) // check if player collides with moon
+			{
+				item->data->win = true;
+				app->sceneManager->current->TransitionToScene(SceneType::WIN);
+			}
+			if (planetItem->data->GetMass() == 5000 && coll == true) // check if player collides with moon
+			{
+				item->data->lose = true;
+				app->sceneManager->current->TransitionToScene(SceneType::LOSE);
+			}
+		}
 	}
+
 
 	return true;
 }
@@ -89,7 +109,6 @@ void Physics::RemovePlayer(Player* player)
 
 bool Physics::CheckCollision(Planet* planet, Player* body)
 {
-
 	//Closest point on collision box
 	int cX, cY;
 

@@ -70,8 +70,7 @@ bool Player::Update(float dt)
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		float angleInRadian = angleDir / 180 * M_PI;
-		if (app->physics->CheckCollision(app->sceneManager->scene->earth, app->sceneManager->scene->player) == false)
-		SetPosition({ GetPosition().x - (float)sin(angleInRadian) * PLAYER_FORCE, GetPosition().y + (float)cos(angleInRadian) * PLAYER_FORCE });
+		AddForce({ -(float)sin(angleInRadian) * PLAYER_FORCE, (float)cos(angleInRadian) * PLAYER_FORCE });
 		currentAnim = &engineOnAnim;
 	}
 	else

@@ -29,6 +29,11 @@ public:
 
 	SDL_Rect GetRect() { return pRect; };
 
+public:
+
+	bool win = false;
+	bool lose = false;
+
 private:
 
 	SDL_Rect pRect = { 0, 0, 0, 0 };
@@ -42,7 +47,6 @@ private:
 	Animation engineOffAnim;
 
 	uint motorFx;
-
 };
 
 #endif // _PLAYER_H_
