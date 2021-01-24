@@ -190,23 +190,23 @@ fPoint Physics::CalculateGravity(Player* player, Planet* planet, float dt)
 		
 
  		if (player->GetPosition().x > planet->GetPosition().x &&
-			player->GetPosition().y < planet->GetPosition().y)
+			player->GetPosition().y < planet->GetPosition().y) // 1st quarter
 		{
-			fVector xAxis = { 0.0, 1.0f };
+			fVector xAxis = { 1.0, 0.0f };
 			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
 			float angle = acos(cosAng);
-			gravityForce = { - (float)sin(angle) * gravityModule, - (float)cos(angle) * gravityModule };
+			gravityForce = { -(float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
 		}
 		else if(player->GetPosition().x < planet->GetPosition().x &&
-			player->GetPosition().y < planet->GetPosition().y)
+			player->GetPosition().y < planet->GetPosition().y) // 2nd quarter
 		{
 			fVector xAxis = { 0.0f, -1.0f };
 			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
 			float angle = acos(cosAng);
-			gravityForce = { (float)sin(angle) * gravityModule, - (float)cos(angle) * gravityModule };
+			gravityForce = { (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
 		}
 		else if (player->GetPosition().x < planet->GetPosition().x  &&
-			player->GetPosition().y > planet->GetPosition().y)
+			player->GetPosition().y > planet->GetPosition().y) // 3rd quarter
 		{
 			fVector xAxis = { 0.0f, -1.0f };
 			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
@@ -214,13 +214,17 @@ fPoint Physics::CalculateGravity(Player* player, Planet* planet, float dt)
 			gravityForce = { (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
 		}
 		else if (player->GetPosition().x > planet->GetPosition().x &&
-			player->GetPosition().y > planet->GetPosition().y)
+			player->GetPosition().y > planet->GetPosition().y) // 4th quarter
 		{
 			fVector xAxis = { 0.0f, 1.0f };
 			float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
 			float angle = acos(cosAng);
-			gravityForce = { - (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule };
+			gravityForce = { -(float)sin(angle) * gravityModule, -(float)cos(angle) * gravityModule };
 		}
+	}
+	else
+	{
+		player->SetVelocity({ 0.0f, 0.0f });
 	}
 
 	gravityForce.x *= PX_TO_KM;

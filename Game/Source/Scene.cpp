@@ -58,7 +58,7 @@ bool Scene::Start()
 	earth = CreatePlanet(9.807, 6371, { 200, 200 }, 5000);
 	moon = CreatePlanet(1.62, 1737, { earth->GetPosition().x + 100 + 384400 * KM_TO_PX , 100 }, 2000);
 
-	player = CreatePlayer({ 0.0f, 0.0f }, 100, { 0, 0, 18, 48 });
+	player = CreatePlayer({ 400.0f, 400.0f }, 100, { 0, 0, 18, 48 });
 	player->Start();
 
 	earthTex = app->tex->Load("Assets/Textures/earth.png");

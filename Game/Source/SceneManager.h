@@ -88,8 +88,6 @@ public:
 
 	SceneControl* sceneControl;
 
-	SceneControl* current;
-
 	int lastLevel = 0;
 	int guiFont;
 };

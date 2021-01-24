@@ -42,8 +42,6 @@ bool Player::Start()
 	collTexture = app->tex->Load("Assets/Textures/player_coll.png");
 
 	motorFx = app->audio->LoadFx("Assets/Audio/Fx/motor.wav");
-
-	SetPosition({ 0.0f, 0.0f });
 	
 	currentAnim = &engineOffAnim;
 
