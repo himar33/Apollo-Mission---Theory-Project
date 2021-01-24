@@ -65,3 +65,15 @@ void Physics::VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt)
 	x.y += v.y * dt + 0.5f * a.y * dt * dt;
 	v.y += a.y * dt;
 }
+
+
+void Physics::AddPlanet(Planet* planet)
+{
+	planets.Add(planet);
+}
+
+void Physics::RemovePlanet(Planet* planet)
+{
+	int i = planets.Find(planet);
+	planets.Del(planets.At(i));
+}

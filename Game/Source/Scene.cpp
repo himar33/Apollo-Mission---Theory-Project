@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "Player.h"
 #include "HUD.h"
+#include "Physics.h"
 #include "SceneManager.h"
 
 #include "Defs.h"
@@ -50,6 +51,8 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	earth = CreatePlanet(9.807, 6371, { 100, 100 }, 5000);
+	moon = CreatePlanet(1.62, 1737, { earth->GetPosition().x + 100 + 384400 * KM_TO_PX , 100 }, 2000);
 
 	earthTex = app->tex->Load("Assets/Textures/earth.png");
 	moonTex = app->tex->Load("Assets/Textures/moon.png");
@@ -79,12 +82,12 @@ bool Scene::PostUpdate()
 
 	int offSetX = earthCurrentAnim->GetCurrentFrame().w / 2;
 	int offSetY = earthCurrentAnim->GetCurrentFrame().h / 2;
-	app->render->DrawTexture(earthTex, 100, 100, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
+	app->render->DrawTexture(earthTex, earth->GetPosition().x, earth->GetPosition().y, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
 	earthCurrentAnim->Update();
 
 	offSetX = moonCurrentAnim->GetCurrentFrame().w / 2;
 	offSetY = moonCurrentAnim->GetCurrentFrame().h / 2;
-	app->render->DrawTexture(moonTex, 100, 100 + 384400*KM_TO_PX, &moonCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
+	app->render->DrawTexture(moonTex, moon->GetPosition().x, moon->GetPosition().y, &moonCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
 	moonCurrentAnim->Update();
 
 	return ret;
@@ -96,8 +99,29 @@ bool Scene::CleanUp()
 	if (!active)
 		return true;
 
+	DeletePlanet(earth);
+	DeletePlanet(moon);
+
+
 	LOG("Freeing scene");
 	active = false;
 
 	return true;
+}
+
+
+Planet* Scene::CreatePlanet(float gravity, float radius, fPoint position, float mass)
+{
+	Planet* planet = new Planet(gravity, radius, position, mass);
+
+	app->physics->AddPlanet(planet);
+
+	return planet;
+}
+
+void Scene::DeletePlanet(Planet* planet)
+{
+	app->physics->RemovePlanet(planet);
+	delete planet;
+	planet = nullptr;
 }

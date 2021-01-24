@@ -42,7 +42,7 @@ bool Player::Start()
 
 	position.x = 0;
 	position.y = 0;
-	velocity = 2;
+	velocity = 10;
 	currentAnim = &engineOffAnim;
 
 	return true;

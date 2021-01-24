@@ -5,6 +5,9 @@
 #include "Animation.h"
 #include "SceneControl.h"
 
+#include "Planet.h"
+
+
 struct SDL_Texture;
 
 class Scene : public SceneControl
@@ -37,14 +40,20 @@ public:
 
 private:
 
+	Planet* CreatePlanet(float gravity, float radius, fPoint position, float mass);
+	void DeletePlanet(Planet* planet);
+
+private:
+
 	SDL_Texture* earthTex = nullptr;
 	Animation* earthCurrentAnim = nullptr;
 	Animation earthAnim;
+	Planet* earth;
 
 	SDL_Texture* moonTex = nullptr;
 	Animation* moonCurrentAnim = nullptr;
 	Animation moonAnim;
-
+	Planet* moon;
 };
 
 #endif // __SCENE_H__

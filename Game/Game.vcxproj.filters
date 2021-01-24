@@ -135,7 +135,9 @@
     <ClInclude Include="Source\Body.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Planet.h" />
+    <ClInclude Include="Source\Planet.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -3,28 +3,33 @@
 
 #include "Body.h"
 
-#include "p2Point.h"
-
-
 
 class Planet : public Body
 {
 public:
 	// Constructor
-	Planet();
+	Planet(float _gravity, float _radius, fPoint position, float mass);
 	// Destructor
-	~Planet();
+	virtual ~Planet();
 
 
 	// ----- PLANET GETTERS ----- //
-	float GetGravity() { return gravity; };
+	float GetGravity() const;
+	float GetRadius() const;
 	// -------------------------- //
+
+	// ----- PLANET SETTERS ----- //
+	void SetGravity(float _gravity);
+	void SetRadius(float _radius);
+	// -------------------------- //
+
 
 
 private:
 
 	// ----- PLANET VARIABLES ----- //
 	float gravity;
+	float radius;
 	// ---------------------------- //
 
 };

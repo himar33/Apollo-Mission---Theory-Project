@@ -4,6 +4,9 @@
 #include "Module.h"
 
 #include "p2Point.h"
+#include "List.h"
+#include "Body.h"
+#include "Planet.h"
 
 
 #define MOON_G_FROM_EARTH (9.807f * (6371 / 384400)^2)
@@ -37,7 +40,8 @@ public:
 public:
 
 	// ----- PHYSICS METHODS ----- //
-
+	void AddPlanet(Planet* planet);
+	void RemovePlanet(Planet* planet);
 	// --------------------------- //
 	
 private:
@@ -49,7 +53,7 @@ private:
 public:
 
 	// ----- PHYSICS VARIABLES ----- //
-
+	List<Planet*> planets;
 	// ----------------------------- //
 
 private:
