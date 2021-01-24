@@ -8,11 +8,20 @@
 
 #include "Log.h"
 #include "Defs.h"
+#include "math.h"
 
 
 Player::Player() : Module()
 {
 	name.Create("player");
+
+	engineOnAnim.PushBack({ 18,0,17,48 });
+	engineOnAnim.PushBack({ 36,0,18,48 });
+	engineOnAnim.PushBack({ 55,0,17,48 });
+	engineOnAnim.loop = true;
+	engineOnAnim.speed = 0.2f;
+
+	engineOffAnim.PushBack({ 0,0,17,48 });
 }
 
 Player::Player(iPoint pPosition, float pVelocity, SDL_Texture* pTexture): Module()
@@ -33,6 +42,8 @@ bool Player::Start()
 
 	position.x = 0;
 	position.y = 0;
+	velocity = 2;
+	currentAnim = &engineOffAnim;
 
 	return true;
 }
@@ -52,12 +63,43 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt) 
 {
+
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		float angleInRadian = angleDir / 180 * M_PI;
+		position.x += sin(angleInRadian) * velocity;
+		position.y -= cos(angleInRadian) * velocity;
+		currentAnim = &engineOnAnim;
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		
+	}
+	else
+	{
+		currentAnim = &engineOffAnim;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		angleDir -= 5;
+		currentAnim = &engineOffAnim;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		angleDir += 5;
+		currentAnim = &engineOffAnim;
+	}
+
 	return true;
 }
 
 bool Player::PostUpdate()
 {
-	app->render->DrawTexture(texture, position.x, position.y);
+	int offSetX = currentAnim->GetCurrentFrame().w / 2;
+	int offSetY = currentAnim->GetCurrentFrame().h / 2;
+	app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame(), 1.0f, angleDir, offSetX, offSetY);
+	currentAnim->Update();
+
 	return true;
 }
 

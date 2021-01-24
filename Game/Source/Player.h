@@ -32,6 +32,11 @@ private:
 	iPoint position;
 	float velocity;
 	SDL_Texture* texture = nullptr;
+	Animation* currentAnim = nullptr;
+	float angleDir = 0.0f;
+
+	Animation engineOnAnim;
+	Animation engineOffAnim;
 
 };
 
