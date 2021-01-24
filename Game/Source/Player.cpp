@@ -73,7 +73,10 @@ bool Player::Update(float dt)
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		
+		float angleInRadian = angleDir / 180 * M_PI;
+		position.x -= sin(angleInRadian) * velocity;
+		position.y += cos(angleInRadian) * velocity;
+		currentAnim = &engineOnAnim;
 	}
 	else
 	{
@@ -89,6 +92,9 @@ bool Player::Update(float dt)
 		angleDir += 5;
 		currentAnim = &engineOffAnim;
 	}
+
+	app->render->camera.x = (position.x - app->render->camera.w/2) * -1;
+	app->render->camera.y = (position.y - app->render->camera.h / 2) * -1;
 
 	return true;
 }
