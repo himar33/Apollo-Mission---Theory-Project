@@ -42,6 +42,8 @@ private:
 	SDL_Texture* img = nullptr;
 	SDL_Texture* bgText = nullptr;
 	SDL_Texture* trophyText = nullptr;
+
+	uint winFx;
 };
 
 #endif // !__SCENEWIN_H__

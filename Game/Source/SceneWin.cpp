@@ -30,10 +30,12 @@ bool SceneWin::Awake()
 
 bool SceneWin::Start()
 {
-
+	winFx = app->audio->LoadFx("Assets/Audio/Fx/win.wav");
 	img = app->tex->Load("Assets/Textures/win_text.png");
 	bgText = app->tex->Load("Assets/Textures/win_bg.png");
 	trophyText = app->tex->Load("Assets/Textures/trophy.png");
+
+	app->audio->PlayFx(1, winFx, 0);
 
 	return true;
 }
@@ -45,7 +47,7 @@ bool SceneWin::PreUpdate()
 
 bool SceneWin::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		return false;
 	}

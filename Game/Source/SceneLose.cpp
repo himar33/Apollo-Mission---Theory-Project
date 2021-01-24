@@ -99,9 +99,11 @@ bool SceneLose::CleanUp()
 {
 	if (!active)
 		return true;
-
-
 	LOG("Freeing scene");
+	app->tex->UnLoad(expTex);
+	app->tex->UnLoad(textTex);
+	app->tex->UnLoad(bgTex);
+	app->audio->Unload1Fx(loseFx);
 	active = false;
 
 	return true;

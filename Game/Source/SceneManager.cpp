@@ -51,7 +51,7 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
-	current = new SceneLose();
+	current = new SceneIntro();
 	current->Start();
 	next = nullptr;
 
