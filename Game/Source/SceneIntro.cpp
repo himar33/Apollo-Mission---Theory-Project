@@ -52,6 +52,8 @@ bool SceneIntro::Start()
 	introBg = app->tex->Load("Assets/Textures/intro_bg.png");
 	introText = app->tex->Load("Assets/Textures/intro_text.png");
 
+	app->audio->PlayMusic("Assets/Audio/Music/menu.wav");
+
 	earthCurrentAnim = &earthAnim;
 	moonCurrentAnim = &moonAnim;
 
@@ -94,6 +96,8 @@ bool SceneIntro::CleanUp()
 {
 	if (!active)
 		return true;
+
+	app->audio->StopMusic();
 
 	app->tex->UnLoad(earthTex);
 	app->tex->UnLoad(moonTex);

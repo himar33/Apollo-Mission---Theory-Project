@@ -33,6 +33,7 @@ public:
 	bool UnloadFxs();
 	bool PauseFx(int channel);
 	bool ResumeFx(int channel);
+	void StopMusic();
 
 	// Play a previously loaded WAV
 	bool PlayFx(int channel, unsigned int fx, int loop, int volume = 100);

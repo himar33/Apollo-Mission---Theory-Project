@@ -226,3 +226,10 @@ bool Audio::ResumeFx(int channel)
 
 	return true;
 }
+
+void Audio::StopMusic()
+{
+	LOG("Stopping music");
+
+	Mix_HaltMusic();
+}
