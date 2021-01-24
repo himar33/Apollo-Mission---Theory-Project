@@ -17,6 +17,21 @@ Scene::Scene() : SceneControl()
 {
 	active = true;
 	name.Create("scene");
+
+	for (int i = 0; i < 50; i++)
+	{
+		earthAnim.PushBack({ i * 300,0,300,300 });
+	}
+	earthAnim.loop = true;
+	earthAnim.speed = 0.1f;
+
+	for (int i = 0; i < 50; i++)
+	{
+		moonAnim.PushBack({ i * 75,0,75,75 });
+	}
+	moonAnim.loop = true;
+	moonAnim.speed = 0.1f;
+
 }
 
 // Destructor
@@ -35,6 +50,10 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+
+	earthTex = app->tex->Load("Assets/Textures/earth.png");
+	moonTex = app->tex->Load("Assets/Textures/moon.png");
+
 	return true;
 }
 
@@ -54,6 +73,12 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	app->render->DrawTexture(earthTex, 100, 100, &earthAnim.GetCurrentFrame());
+	earthAnim.Update();
+
+	app->render->DrawTexture(moonTex, 500, 100, &moonAnim.GetCurrentFrame());
+	moonAnim.Update();
 
 	return ret;
 }

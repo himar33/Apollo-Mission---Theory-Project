@@ -36,6 +36,13 @@ public:
 	bool CleanUp();
 
 private:
+
+	SDL_Texture* earthTex = nullptr;
+	Animation earthAnim;
+
+	SDL_Texture* moonTex = nullptr;
+	Animation moonAnim;
+
 };
 
 #endif // __SCENE_H__
