@@ -64,7 +64,7 @@ private:
 	Render* render;
 	Textures* tex;
 
-
+	
 	SceneControl* next;
 
 	// Required variables to manage screen transitions (fade-in, fade-out)
@@ -77,6 +77,9 @@ private:
 	bool ViewRectangles = false;
 
 public:
+
+	SceneControl* current;
+
 	SceneLogo* sceneLogo;
 	SceneIntro* sceneIntro;
 	Scene* scene;

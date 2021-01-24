@@ -59,7 +59,7 @@ private:
 	fPoint CalculateGravity(Player* player, Planet* planet, float dt);
 	float CalculateGravityRelativeToDistance(Planet* planet, float distance);
 	void NewtonSecondLaw(Player* player, float dt);
-	void VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt);
+	void VerletIntegrator(Player* player, float dt);
 	// --------------------------- //
 
 public:

@@ -23,6 +23,7 @@ public:
 	float GetAngularAcceleration() const;
 	float GetTotalTorques() const;
 	float GetMass() const;
+	float GetInertia() const;
 	// ------------------------ //
 
 	// ----- BODY SETTERS ----- //
@@ -39,6 +40,7 @@ public:
 	void ResetTorques();
 	void AddTorque(float _t);
 	void SetMass(float _mass);
+	void SetInertia(float _inertia);
 	// ------------------------ //
 
 public:
@@ -60,6 +62,7 @@ private:
 	float totalTorques = 0.0f;
 
 	float mass = 1.0f;
+	float inertia = 0.0f;
 
 	Animation* animation = nullptr;
 };

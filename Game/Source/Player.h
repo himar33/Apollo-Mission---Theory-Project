@@ -6,7 +6,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 
-#define PLAYER_SPEED 10.0f
+#define PLAYER_FORCE 10.0f
 
 
 struct SDL_Rect;
