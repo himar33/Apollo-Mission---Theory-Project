@@ -54,6 +54,9 @@ bool Scene::Start()
 	earthTex = app->tex->Load("Assets/Textures/earth.png");
 	moonTex = app->tex->Load("Assets/Textures/moon.png");
 
+	earthCurrentAnim = &earthAnim;
+	moonCurrentAnim = &moonAnim;
+
 	return true;
 }
 
@@ -74,11 +77,15 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawTexture(earthTex, 100, 100, &earthAnim.GetCurrentFrame());
-	earthAnim.Update();
+	int offSetX = earthCurrentAnim->GetCurrentFrame().w / 2;
+	int offSetY = earthCurrentAnim->GetCurrentFrame().h / 2;
+	app->render->DrawTexture(earthTex, 100, 100, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
+	earthCurrentAnim->Update();
 
-	app->render->DrawTexture(moonTex, 500, 100, &moonAnim.GetCurrentFrame());
-	moonAnim.Update();
+	offSetX = moonCurrentAnim->GetCurrentFrame().w / 2;
+	offSetY = moonCurrentAnim->GetCurrentFrame().h / 2;
+	app->render->DrawTexture(moonTex, 100, 100 + 384400*KM_TO_PX, &moonCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f, offSetX, offSetY);
+	moonCurrentAnim->Update();
 
 	return ret;
 }

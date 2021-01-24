@@ -38,9 +38,11 @@ public:
 private:
 
 	SDL_Texture* earthTex = nullptr;
+	Animation* earthCurrentAnim = nullptr;
 	Animation earthAnim;
 
 	SDL_Texture* moonTex = nullptr;
+	Animation* moonCurrentAnim = nullptr;
 	Animation moonAnim;
 
 };
