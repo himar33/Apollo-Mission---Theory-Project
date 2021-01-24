@@ -10,8 +10,8 @@
 #endif
 #define NULL  0
 
-#define	WINDOW_W  1920
-#define	WINDOW_H  1080
+#define	WINDOW_W  980
+#define	WINDOW_H  720
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
