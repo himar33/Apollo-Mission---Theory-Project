@@ -189,7 +189,7 @@ bool Audio::UnloadFxs()
 
 
 // Play WAV
-bool Audio::PlayFx(int channel, unsigned int id, int volume)
+bool Audio::PlayFx(int channel, unsigned int id, int loop, int volume)
 {
 	bool ret = false;
 
@@ -203,9 +203,26 @@ bool Audio::PlayFx(int channel, unsigned int id, int volume)
 		else
 			Mix_VolumeChunk(fx[id], volume);
 
-		Mix_PlayChannel(channel, fx[id], 0);
+		Mix_PlayChannel(channel, fx[id], loop);
 		ret = true;
 	}
 
 	return ret;
+}
+
+// Pause WAV
+bool Audio::PauseFx(int channel)
+{
+
+	Mix_Pause(channel);
+
+	return true;
+}
+
+// Resume WAV
+bool Audio::ResumeFx(int channel)
+{
+	Mix_Resume(channel);
+
+	return true;
 }

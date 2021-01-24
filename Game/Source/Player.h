@@ -38,6 +38,8 @@ private:
 	Animation engineOnAnim;
 	Animation engineOffAnim;
 
+	uint motorFx;
+
 };
 
 #endif // _PLAYER_H_

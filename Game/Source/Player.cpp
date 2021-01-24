@@ -40,10 +40,15 @@ bool Player::Start()
 	// Load textures and FX
 	texture = app->tex->Load("Assets/Textures/rocket.png");
 
+	motorFx = app->audio->LoadFx("Assets/Audio/Fx/motor.wav");
+
 	position.x = 0;
 	position.y = 0;
 	velocity = 10;
 	currentAnim = &engineOffAnim;
+
+	app->audio->PlayFx(1, motorFx, -1);
+	app->audio->PauseFx(1);
 
 	return true;
 }
@@ -66,6 +71,7 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
+		app->audio->ResumeFx(1);
 		float angleInRadian = angleDir / 180 * M_PI;
 		position.x += sin(angleInRadian) * velocity;
 		position.y -= cos(angleInRadian) * velocity;
@@ -80,6 +86,7 @@ bool Player::Update(float dt)
 	}
 	else
 	{
+		app->audio->PauseFx(1);
 		currentAnim = &engineOffAnim;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)

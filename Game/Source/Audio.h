@@ -31,9 +31,11 @@ public:
 	unsigned int LoadFx(const char* path);
 	bool Unload1Fx(int index);
 	bool UnloadFxs();
+	bool PauseFx(int channel);
+	bool ResumeFx(int channel);
 
 	// Play a previously loaded WAV
-	bool PlayFx(int channel, unsigned int fx, int volume = 100);
+	bool PlayFx(int channel, unsigned int fx, int loop, int volume = 100);
 
 private:
 

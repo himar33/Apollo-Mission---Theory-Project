@@ -42,6 +42,8 @@ public:
 	// ----- PHYSICS METHODS ----- //
 	void AddPlanet(Planet* planet);
 	void RemovePlanet(Planet* planet);
+	bool CheckCollision(Planet* planet, Body* body);
+	double distanceSquared(int x1, int y1, int x2, int y2);
 	// --------------------------- //
 	
 private:

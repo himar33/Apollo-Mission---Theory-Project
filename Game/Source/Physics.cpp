@@ -77,3 +77,55 @@ void Physics::RemovePlanet(Planet* planet)
 	int i = planets.Find(planet);
 	planets.Del(planets.At(i));
 }
+
+bool CheckCollision(Planet* planet, Body* body)
+{
+
+	//Closest point on collision box
+	int cX, cY;
+
+	//Find closest x offset
+	//if (planet->GetPosition().x < body->GetPosition().x)
+	//{
+	//	cX = body->GetPosition().x;
+	//}
+	//else if (planet->GetPosition().x > body->GetPosition().x + b.w)
+	//{
+	//	cX = body->GetPosition().x + b.w;
+	//}
+	//else
+	//{
+	//	cX = planet->GetPosition().x;
+	//}
+
+	////Find closest y offset
+	//if (planet->GetPosition().y < body->GetPosition().y)
+	//{
+	//	cY = body->GetPosition().x;
+	//}
+	//else if (planet->GetPosition().y > body->GetPosition().x + b.h)
+	//{
+	//	cY = body->GetPosition().y + b.h;
+	//}
+	//else
+	//{
+	//	cY = planet->GetPosition().y;
+	//}
+
+	////If the closest point is inside the circle
+	//if (distanceSquared(planet->GetPosition().x, planet->GetPosition().y, cX, cY) < planet->GetRadius() * planet->GetRadius())
+	//{
+	//	//This box and the circle have collided
+	//	return true;
+	//}
+
+	//If the shapes have not collided
+	return false;
+}
+
+double distanceSquared(int x1, int y1, int x2, int y2)
+{
+	int deltaX = x2 - x1;
+	int deltaY = y2 - y1;
+	return deltaX * deltaX + deltaY * deltaY;
+}
