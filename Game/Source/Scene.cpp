@@ -68,7 +68,7 @@ bool Scene::Start()
 	earthCurrentAnim = &earthAnim;
 	moonCurrentAnim = &moonAnim;
 
-	app->audio->PlayMusic("Assets/Audio/Music/ambient.wav");
+	app->audio->PlayMusic("Assets/Audio/Music/music.wav");
 
 	loaded = true;
 
@@ -125,6 +125,7 @@ bool Scene::CleanUp()
 	DeletePlanet(earth);
 	DeletePlanet(moon);
 	
+	app->audio->StopMusic();
 
 	LOG("Freeing scene");
 	active = false;
