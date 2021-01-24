@@ -17,9 +17,11 @@ public:
 	fPoint GetPosition() const;
 	fPoint GetVelocity() const;
 	fPoint GetAcceleration() const;
+	fPoint GetTotalForces() const;
 	float GetAngularPosition() const;
 	float GetAngularVelocity() const;
 	float GetAngularAcceleration() const;
+	float GetTotalTorques() const;
 	float GetMass() const;
 	// ------------------------ //
 

@@ -15,7 +15,6 @@ Physics::Physics() : Module()
 {
 	name.Create("physics");
 }
-
 // Destructor
 Physics::~Physics()
 {
@@ -67,27 +66,25 @@ bool Physics::CleanUp()
 }
 
 
-// Verlet Integrator
-void Physics::VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt)
-{
-	x.x += v.x * dt + 0.5f * a.x * dt * dt;
-	v.x += a.x * dt;
-
-	x.y += v.y * dt + 0.5f * a.y * dt * dt;
-	v.y += a.y * dt;
-}
-
-
 void Physics::AddPlanet(Planet* planet)
 {
 	planets.Add(planet);
 }
-
 void Physics::RemovePlanet(Planet* planet)
 {
 	int i = planets.Find(planet);
 	planets.Del(planets.At(i));
 }
+void Physics::AddPlayer(Player* player)
+{
+	players.Add(player);
+}
+void Physics::RemovePlayer(Player* player)
+{
+	int i = players.Find(player);
+	players.Del(players.At(i));
+}
+
 
 bool Physics::CheckCollision(Planet* planet, Player* body)
 {
@@ -134,7 +131,6 @@ bool Physics::CheckCollision(Planet* planet, Player* body)
 	//If the shapes have not collided
 	return false;
 }
-
 double Physics::distanceSquared(int x1, int y1, int x2, int y2)
 {
 	int deltaX = x2 - x1;
@@ -142,29 +138,32 @@ double Physics::distanceSquared(int x1, int y1, int x2, int y2)
 	return deltaX * deltaX + deltaY * deltaY;
 }
 
-void Physics::AddPlayer(Player* player)
-{
-	players.Add(player);
-}
 
-void Physics::RemovePlayer(Player* player)
-{
-	int i = players.Find(player);
-	players.Del(players.At(i));
-}
-
-
+// Add World Forces to the player
 void Physics::AddWorldForces(Player* player, float dt)
 {
 	for (ListItem<Planet*>* planet = planets.start; planet != NULL; planet = planet->next)
 	{
 		fPoint force = CalculateGravity(player, planet->data, dt);
+		player->AddForce(force);
 	}
 }
-
+// Apply Newton's Second Law
 void Physics::NewtonSecondLaw(Player* player, float dt)
 {
+	fPoint acceleration;
+	acceleration.x = player->GetTotalForces().x / player->GetMass();
+	acceleration.y = player->GetTotalForces().y / player->GetMass();
+	player->SetAcceleration(acceleration);
+}
+// Verlet Integrator
+void Physics::VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt)
+{
+	x.x += v.x * dt + 0.5f * a.x * dt * dt;
+	v.x += a.x * dt;
 
+	x.y += v.y * dt + 0.5f * a.y * dt * dt;
+	v.y += a.y * dt;
 }
 
 
@@ -172,15 +171,27 @@ fPoint Physics::CalculateGravity(Player* player, Planet* planet, float dt)
 {
 	float distance = CalculateDistance(player->GetPosition(), planet->GetPosition());
 
-	fVector gravity = { player->GetPosition().x - planet->GetPosition().x, player->GetPosition().y - planet->GetPosition().y };
-	gravity.Normalize();
+	float gravityModule = CalculateGravityRelativeToDistance(planet, distance);
+
+	fVector direction = { player->GetPosition().x - planet->GetPosition().x, player->GetPosition().y - planet->GetPosition().y };
+	direction.Normalize();
 	fVector xAxis = { 0.0f, 1.0f };
 
-	//float cosAng = dot()
+	float cosAng = direction.dot(xAxis) / direction.Length() * xAxis.Length();
+	float angle = acos(cosAng);
 
-	return { 0.0f, 0.0f };
+	fPoint gravityForce = { (float)sin(angle) * gravityModule, (float)cos(angle) * gravityModule};
+
+	return gravityForce;
 }
+float Physics::CalculateGravityRelativeToDistance(Planet* planet, float distance)
+{
+	distance = distance * PX_TO_KM;
 
+	float g = planet->GetGravity() / pow((planet->GetRadius() / distance), 2);
+
+	return g;
+}
 float Physics::CalculateDistance(fPoint pos1, fPoint pos2)
 {
 	float res = sqrt(pow(pos2.x - pos1.x, 2) + pow(pos2.y - pos1.y, 2));

@@ -57,6 +57,7 @@ private:
 	// ----- PHYSICS METHODS ----- //
 	void AddWorldForces(Player* player, float dt);
 	fPoint CalculateGravity(Player* player, Planet* planet, float dt);
+	float CalculateGravityRelativeToDistance(Planet* planet, float distance);
 	void NewtonSecondLaw(Player* player, float dt);
 	void VerletIntegrator(fPoint& x, fPoint& v, fPoint& a, float dt);
 	// --------------------------- //

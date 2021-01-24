@@ -19,6 +19,11 @@ fPoint Body::GetAcceleration() const
 {
 	return a;
 }
+// totalForces getter
+fPoint Body::GetTotalForces() const
+{
+	return totalForces;
+}
 // ----------------------------------- //
 
 
@@ -37,6 +42,11 @@ float Body::GetAngularVelocity() const
 float Body::GetAngularAcceleration() const
 {
 	return angularAcceleration;
+}
+// totalTorques getter
+float Body::GetTotalTorques() const
+{
+	return totalTorques;
 }
 // ------------------------------------ //
 
