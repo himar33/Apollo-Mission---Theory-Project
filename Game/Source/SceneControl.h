@@ -11,7 +11,8 @@ class Textures;
 
 enum class SceneType
 {
-	LEVEL1
+	LEVEL1,
+	INTRO,
 };
 
 class SceneControl

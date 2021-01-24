@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "Scene.h"
+#include "SceneIntro.h"
 
 #include "Input.h"
 #include "Render.h"
@@ -48,7 +49,7 @@ bool SceneManager::Awake()
 // Called before the first frame
 bool SceneManager::Start()
 {
-	current = new Scene();
+	current = new SceneIntro();
 	current->Start();
 	next = nullptr;
 
@@ -65,7 +66,7 @@ bool SceneManager::PreUpdate()
 bool SceneManager::Update(float dt)
 {
 	bool ret = true;
-	if (!pause && (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) && (current->name == "scene"))
+	if (!pause && (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		pause = !pause;
 
 	if (!onTransition)

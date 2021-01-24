@@ -64,7 +64,7 @@ private:
 	Render* render;
 	Textures* tex;
 
-	SceneControl* current;
+
 	SceneControl* next;
 
 	// Required variables to manage screen transitions (fade-in, fade-out)
@@ -84,6 +84,8 @@ public:
 	SceneLose* sceneLose;
 
 	SceneControl* sceneControl;
+
+	SceneControl* current;
 
 	int lastLevel = 0;
 	int guiFont;
