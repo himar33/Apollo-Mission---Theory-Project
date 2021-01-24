@@ -38,21 +38,21 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	Player* player = nullptr;
+	Planet* earth = nullptr;
+
 private:
 
 	Planet* CreatePlanet(float gravity, float radius, fPoint position, float mass);
 	void DeletePlanet(Planet* planet);
-	Player* CreatePlayer(fPoint position, float mass);
+	Player* CreatePlayer(fPoint position, float mass, SDL_Rect rect);
 	void DeletePlayer(Player* player);
 
 private:
 
-	Player* player = nullptr;
-
 	SDL_Texture* earthTex = nullptr;
 	Animation* earthCurrentAnim = nullptr;
 	Animation earthAnim;
-	Planet* earth = nullptr;
 
 	SDL_Texture* moonTex = nullptr;
 	Animation* moonCurrentAnim = nullptr;

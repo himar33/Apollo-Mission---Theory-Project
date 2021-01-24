@@ -265,6 +265,12 @@ bool App::DoUpdate()
 	item = modules.start;
 	Module* pModule = NULL;
 
+	if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		if (debug == true) debug = false;
+		else debug = true;
+	}
+
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
 		pModule = item->data;
