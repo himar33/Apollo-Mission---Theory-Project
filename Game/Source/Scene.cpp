@@ -64,6 +64,7 @@ bool Scene::Start()
 
 	earthTex = app->tex->Load("Assets/Textures/earth.png");
 	moonTex = app->tex->Load("Assets/Textures/moon.png");
+	bgTex = app->tex->Load("Assets/Textures/background.png");
 
 	earthCurrentAnim = &earthAnim;
 	moonCurrentAnim = &moonAnim;
@@ -94,6 +95,9 @@ bool Scene::PostUpdate()
 
 	int offSetX = earthCurrentAnim->GetCurrentFrame().w / 2;
 	int offSetY = earthCurrentAnim->GetCurrentFrame().h / 2;
+
+	app->render->DrawTexture(bgTex, player->GetPosition().x - WINDOW_W / 2, player->GetPosition().y - WINDOW_H / 2);
+
 	app->render->DrawTexture(earthTex, earth->GetPosition().x - offSetX, earth->GetPosition().y - offSetY, &earthCurrentAnim->GetCurrentFrame(), 1.0f, 0.0f);
 	if (app->debug == true)
 	{

@@ -10,8 +10,8 @@
 #endif
 #define NULL  0
 
-#define	WINDOW_W  1920
-#define	WINDOW_H  1080
+#define	WINDOW_W  980
+#define	WINDOW_H  720
 
 #define KM_TO_PX 300/12742
 #define PX_TO_KM 12742/300

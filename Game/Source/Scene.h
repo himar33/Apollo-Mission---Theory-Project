@@ -58,6 +58,8 @@ private:
 	Animation* moonCurrentAnim = nullptr;
 	Animation moonAnim;
 	Planet* moon = nullptr;
+
+	SDL_Texture* bgTex = nullptr;
 };
 
 #endif // __SCENE_H__
