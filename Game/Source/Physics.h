@@ -6,6 +6,10 @@
 #include "p2Point.h"
 
 
+#define MOON_G_FROM_EARTH (9.807f * (6371 / 384400)^2)
+#define EARTH_G_FROM_MOON ()
+
+
 class Physics : public Module
 {
 public:

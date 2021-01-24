@@ -95,6 +95,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Body.cpp" />
     <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\HUD.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
+    <ClCompile Include="Source\Planet.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
@@ -111,11 +113,13 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Body.h" />
     <ClInclude Include="Source\Font.h" />
     <ClInclude Include="Source\HUD.h" />
     <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Physics.h" />
+    <ClInclude Include="Source\Planet.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Queue.h" />
     <ClInclude Include="Source\Scene.h" />
