@@ -68,7 +68,7 @@ bool Scene::Start()
 	earthCurrentAnim = &earthAnim;
 	moonCurrentAnim = &moonAnim;
 
-	app->audio->PlayMusic("Assets/Audio/Music/music.wav");
+	app->audio->PlayMusic("Assets/Audio/Music/menu.ogg");
 
 	loaded = true;
 

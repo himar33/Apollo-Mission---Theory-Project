@@ -52,7 +52,7 @@ bool SceneIntro::Start()
 	introBg = app->tex->Load("Assets/Textures/intro_bg.png");
 	introText = app->tex->Load("Assets/Textures/intro_text.png");
 
-	app->audio->PlayMusic("Assets/Audio/Music/menu.wav");
+	app->audio->PlayMusic("Assets/Audio/Music/menu.ogg");
 
 	earthCurrentAnim = &earthAnim;
 	moonCurrentAnim = &moonAnim;
